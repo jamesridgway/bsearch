@@ -10,7 +10,7 @@ A utility for binary searching a sorted file for lines that start with the searc
        bsearch [global options] command [command options] SEARCH_KEY FILENAME
 
     VERSION:
-       0.0.1
+       1.0.0
 
     COMMANDS:
          help, h  Shows a list of commands or help for one command
@@ -18,3 +18,20 @@ A utility for binary searching a sorted file for lines that start with the searc
     GLOBAL OPTIONS:
        --help, -h     show help
        --version, -v  print the version
+
+## Installing
+You can install bsearch via the following OS specific repositories
+
+### Debian/Ubuntu
+
+    # Add Bintray's GPG key
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
+
+    # Add the repository
+    echo "deb https://dl.bintray.com/jamesridgway/debian xenial main" | sudo tee -a /etc/apt/sources.list
+
+    # Update apt
+    sudo apt-get update
+
+    # Install
+    sudo apt-get install bsearch

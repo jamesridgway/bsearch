@@ -11,7 +11,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "bsearch"
 	app.Usage = "utility for binary searching a sorted file for lines that start with the search key"
-	app.Version = "0.0.1"
+	app.Version = "1.0.0"
 	app.ArgsUsage = "SEARCH_KEY FILENAME"
 
 	app.Action = func(c *cli.Context) error {
