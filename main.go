@@ -17,7 +17,7 @@ func main() {
 	app.Action = func(c *cli.Context) error {
 
 		if c.NArg() != 2 {
-			fmt.Println("Usage: bsearch [global options] command [command options] SEARCH_KEY FILENAME")
+			fmt.Println("Usage: bsearch SEARCH_KEY FILENAME")
 			fmt.Println("Try 'bsearch --help' for more information.")
 			os.Exit(1)
 		}
