@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bsearch/binary_search"
 	"github.com/urfave/cli"
 	"os"
 	"fmt"
@@ -26,7 +25,7 @@ func main() {
 		searchCriteria := c.Args().Get(0)
 		fileName := c.Args().Get(1)
 
-		bsearch := binary_search.NewBinarySearch(fileName)
+		bsearch := NewBinarySearch(fileName)
 
 		startPosition := bsearch.FindStart(searchCriteria)
 
