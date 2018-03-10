@@ -2,18 +2,41 @@ package main
 
 import (
 	"bsearch/binary_search"
+	"github.com/urfave/cli"
+	"os"
 	"fmt"
 )
 
 func main() {
-	searchCriteria := "0866D"
 
-	bsearch := binary_search.New("/home/james/pwned-passwords-ordered-2.0.txt")
+	app := cli.NewApp()
+	app.Name = "bsearch"
+	app.Usage = "utility for binary searching a sorted file for lines that start with the search key"
+	app.Version = "0.0.1"
+	app.ArgsUsage = "SEARCH_KEY FILENAME"
 
-	startPosition := bsearch.FindStart(searchCriteria)
-	fmt.Println("Match starts at: ", startPosition)
+	app.Action = func(c *cli.Context) error {
 
-	if startPosition > -1 {
-		bsearch.PrintMatch(startPosition, searchCriteria)
+		if c.NArg() != 2 {
+			fmt.Println("Usage: bsearch [global options] command [command options] SEARCH_KEY FILENAME")
+			fmt.Println("Try 'bsearch --help' for more information.")
+			os.Exit(1)
+		}
+
+		searchCriteria := c.Args().Get(0)
+		fileName := c.Args().Get(1)
+
+		bsearch := binary_search.New(fileName)
+
+		startPosition := bsearch.FindStart(searchCriteria)
+
+		if startPosition > -1 {
+			bsearch.PrintMatch(startPosition, searchCriteria)
+		}
+
+		return nil
 	}
+
+	app.Run(os.Args)
+
 }
