@@ -26,7 +26,7 @@ func main() {
 		searchCriteria := c.Args().Get(0)
 		fileName := c.Args().Get(1)
 
-		bsearch := binary_search.New(fileName)
+		bsearch := binary_search.NewBinarySearch(fileName)
 
 		startPosition := bsearch.FindStart(searchCriteria)
 

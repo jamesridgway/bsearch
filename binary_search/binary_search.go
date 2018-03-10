@@ -12,7 +12,7 @@ type BinarySearch struct {
 	file     *os.File
 }
 
-func New(fileName string) BinarySearch {
+func NewBinarySearch(fileName string) BinarySearch {
 	return BinarySearch{fileName: fileName}
 }
 
