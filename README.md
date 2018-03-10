@@ -1,4 +1,5 @@
 # bsearch
+[![Build Status](https://travis-ci.org/jamesridgway/bsearch.svg?branch=master)](https://travis-ci.org/jamesridgway/bsearch)
 A utility for binary searching a sorted file for lines that start with the search key.
 
     NAME:
