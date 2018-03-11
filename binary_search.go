@@ -5,23 +5,51 @@ import (
 	"log"
 	"io"
 	"fmt"
+	"bytes"
+	"strings"
+	"strconv"
+	"unicode"
+	"unicode/utf8"
+)
+
+type CompareMode int
+
+const (
+	IgnoreWhitespace CompareMode = 1 << iota
+	CaseInsensitive CompareMode = 1 << iota
+	Numeric CompareMode = 1 << iota
 )
 
 type BinarySearch struct {
 	fileName string
 	file     *os.File
 	reverse bool
+	compareMode CompareMode
 }
 
-func NewBinarySearch(fileName string, reverse bool) BinarySearch {
-	return BinarySearch{fileName: fileName, reverse: reverse}
+func NewBinarySearch(fileName string, reverse bool, compareMode CompareMode) BinarySearch {
+	return BinarySearch{fileName: fileName, reverse: reverse, compareMode: compareMode}
 }
 
-func (search *BinarySearch) Compare(match string) int {
+func (search *BinarySearch) checkMatch(match string, matchPos int, data []byte) bool {
+	return matchPos < len(match) && bytes.ToLower(data)[0] == match[matchPos]
+}
+
+func (search *BinarySearch) CompareBytes(match string) int {
+	if search.compareMode & CaseInsensitive == CaseInsensitive {
+		match = strings.ToLower(match)
+	}
+	if search.compareMode & IgnoreWhitespace == IgnoreWhitespace {
+		match = strings.TrimLeft(match, " \t")
+	}
 	data := make([]byte, 1)
 	var matchPos = 0
 	var byteErr error = nil
-	for _, err := search.file.Read(data); matchPos < len(match) && data[0] == match[matchPos]; _, err = search.file.Read(data) {
+	var err error = nil
+	for _, err = search.file.Read(data); data[0] != '\n' && (data[0] == ' ' || data[0] == '\t'); _, err = search.file.Read(data) {
+		byteErr = err
+	}
+	for err = nil; search.checkMatch(match, matchPos, data); _, err = search.file.Read(data) {
 		byteErr = err
 		matchPos++
 	}
@@ -36,8 +64,55 @@ func (search *BinarySearch) Compare(match string) int {
 		return -1
 	}
 
+	if search.compareMode & CaseInsensitive == CaseInsensitive {
+		return int(match[matchPos]) - int(bytes.ToLower(data)[0])
+	}
 	return int(match[matchPos]) - int(data[0])
+}
 
+func (search *BinarySearch) CompareNumeric(match string) int {
+	matchVal, err := strconv.ParseFloat(match, 64)
+	var buffer bytes.Buffer
+	data := make([]byte, 1)
+	for _, err = search.file.Read(data); err != io.EOF && data[0] != '\n'; _, err = search.file.Read(data) {
+		if buffer.Len() == 0 && (data[0] == ' ' || data[0] == '\t') {
+			continue
+		}
+		r, _ := utf8.DecodeRune(data)
+
+		if data[0] != '-' && data[0] != '.' && !unicode.IsDigit(r) {
+			break
+		}
+		buffer.WriteByte(data[0])
+	}
+	if buffer.Len() == 0 {
+		return -1
+	}
+
+	bufferString := buffer.String()
+	var bufferVal, _ = strconv.ParseFloat(bufferString, 64)
+
+	if matchVal < bufferVal {
+		return -1
+	}
+	if matchVal > bufferVal {
+		return 1
+	}
+	return 0
+}
+
+func (search *BinarySearch) Compare(match string) int {
+	var cmp int
+
+	if search.compareMode & Numeric == Numeric {
+		cmp = search.CompareNumeric(match)
+	} else {
+		cmp = search.CompareBytes(match)
+	}
+	if search.reverse {
+		cmp = -cmp
+	}
+	return cmp
 }
 
 func (search *BinarySearch) PrintMatch(start int64, match string) {
@@ -100,9 +175,6 @@ func (search *BinarySearch) FindStart(match string) int64 {
 
 		if previous != scan {
 			cmp = search.Compare(match)
-			if search.reverse {
-				cmp = -cmp
-			}
 			previous = scan
 		}
 

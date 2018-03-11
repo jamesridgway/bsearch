@@ -4,6 +4,9 @@
 bsearch - A utility for binary searching a sorted file for lines that start with the search key.
 
 .SH SYNOPSIS
+\fI
+[OPTIONS]
+\fP
 .B bsearch
 .I SEARCH_KEY
 .I FILENAME
@@ -11,6 +14,24 @@ bsearch - A utility for binary searching a sorted file for lines that start with
 .SH DESCRIPTION
 .B bsearch
 is a utility for binary searching a sorted file for lines that start with the search key.
+
+.SH OPTIONS
+
+.TP
+\fB\-r\fB, \-\-reverse\fR
+The reverse flag indicates the file is sorted in descending order.
+
+.TP
+\fB\-i\fB, \-\-ignore\-case\fR
+Perform a case-insensitive search.
+
+.TP
+\fB\-t\fB, \-\-trim\fR
+Ignore leading whitespace in the file and search key.
+
+.TP
+\fB\-n\fB, \-\-numeric\fR
+Use a numeric comparator. Use this option when using a file sorted by \fBsort -n\fB
 
 .SH AUTHORS
 .B bsearch

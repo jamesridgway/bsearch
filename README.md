@@ -7,7 +7,7 @@ A utility for binary searching a sorted file for lines that start with the searc
        bsearch - utility for binary searching a sorted file for lines that start with the search key
 
     USAGE:
-       bsearch SEARCH_KEY FILENAME
+       bsearch [options] SEARCH_KEY FILENAME
 
     VERSION:
        1.0.0
@@ -16,8 +16,12 @@ A utility for binary searching a sorted file for lines that start with the searc
          help, h  Shows a list of commands or help for one command
 
     GLOBAL OPTIONS:
-       --help, -h     show help
-       --version, -v  print the version
+       -r, --reverse      the reverse flag indicates the file is sorted in descending order
+       -i, --ignore-case  case insensitive
+       -t, --trim         ignore whitespace
+       -n, --numeric      use numeric comparison
+       --help, -h         show help
+       --version, -v      print the version
 
 ## Installing
 You can install bsearch via the following OS specific repositories

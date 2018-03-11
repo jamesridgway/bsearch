@@ -48,9 +48,9 @@ dpkg-deb --build "${PACKAGE_DIRECTORY}"
 DEBIAN_FILE="${OUTPUT_DIR}/bsearch_${BSEARCH_VERSION}.deb"
 
 
-if git describe --tags | grep -oP "\d+.\d+.\d+"; then
+if git tag -l --contains HEAD | grep -oP "^\d+.\d+.\d+$"; then
 
-    RELEASE_TAG=$(git describe --tags | grep -oP "\d+.\d+.\d+")
+    RELEASE_TAG=$(git tag -l --contains HEAD | grep -oP "^\d+.\d+.\d+$")
     echo_task "Detected release version ${RELEASE_TAG}"
 
     if [ -n "${BINTRAY_API_KEY}" ]; then
