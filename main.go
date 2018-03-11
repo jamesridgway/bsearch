@@ -14,6 +14,16 @@ func main() {
 	app.Version = "1.0.0"
 	app.ArgsUsage = "SEARCH_KEY FILENAME"
 
+	var reverse = false;
+	app.Flags = []cli.Flag {
+		cli.BoolFlag{
+			Name:        "reverse,r",
+			Usage:       "the reverse flag indicates the file is sorted in descending order",
+			Destination: &reverse,
+		},
+	}
+
+
 	app.Action = func(c *cli.Context) error {
 
 		if c.NArg() != 2 {
@@ -30,7 +40,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		bsearch := NewBinarySearch(fileName)
+		bsearch := NewBinarySearch(fileName, reverse)
 
 		startPosition := bsearch.FindStart(searchCriteria)
 

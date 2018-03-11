@@ -10,10 +10,11 @@ import (
 type BinarySearch struct {
 	fileName string
 	file     *os.File
+	reverse bool
 }
 
-func NewBinarySearch(fileName string) BinarySearch {
-	return BinarySearch{fileName: fileName}
+func NewBinarySearch(fileName string, reverse bool) BinarySearch {
+	return BinarySearch{fileName: fileName, reverse: reverse}
 }
 
 func (search *BinarySearch) Compare(match string) int {
@@ -99,6 +100,9 @@ func (search *BinarySearch) FindStart(match string) int64 {
 
 		if previous != scan {
 			cmp = search.Compare(match)
+			if search.reverse {
+				cmp = -cmp
+			}
 			previous = scan
 		}
 
