@@ -11,7 +11,7 @@ A utility for binary searching a sorted file for lines that start with the searc
        bsearch [options] SEARCH_KEY FILENAME
 
     VERSION:
-       1.0.1
+       1.0.2
 
     COMMANDS:
          help, h  Shows a list of commands or help for one command

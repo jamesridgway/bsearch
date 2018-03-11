@@ -32,7 +32,11 @@ func NewBinarySearch(fileName string, reverse bool, compareMode CompareMode) Bin
 }
 
 func (search *BinarySearch) checkMatch(match string, matchPos int, data []byte) bool {
-	return matchPos < len(match) && bytes.ToLower(data)[0] == match[matchPos]
+	if search.compareMode & CaseInsensitive == CaseInsensitive {
+		return matchPos < len(match) && bytes.ToLower(data)[0] == match[matchPos]
+	} else {
+		return matchPos < len(match) && data[0] == match[matchPos]
+	}
 }
 
 func (search *BinarySearch) CompareBytes(match string) int {
@@ -46,8 +50,12 @@ func (search *BinarySearch) CompareBytes(match string) int {
 	var matchPos = 0
 	var byteErr error = nil
 	var err error = nil
-	for _, err = search.file.Read(data); data[0] != '\n' && (data[0] == ' ' || data[0] == '\t'); _, err = search.file.Read(data) {
-		byteErr = err
+	if search.compareMode & IgnoreWhitespace == IgnoreWhitespace {
+		for _, err = search.file.Read(data); data[0] != '\n' && (data[0] == ' ' || data[0] == '\t'); _, err = search.file.Read(data) {
+			byteErr = err
+		}
+	} else {
+		_, err = search.file.Read(data)
 	}
 	for err = nil; search.checkMatch(match, matchPos, data); _, err = search.file.Read(data) {
 		byteErr = err
