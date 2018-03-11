@@ -25,6 +25,11 @@ func main() {
 		searchCriteria := c.Args().Get(0)
 		fileName := c.Args().Get(1)
 
+		if _, err := os.Stat(fileName); os.IsNotExist(err) {
+			fmt.Println("bsearch: no such file")
+			os.Exit(1)
+		}
+
 		bsearch := NewBinarySearch(fileName)
 
 		startPosition := bsearch.FindStart(searchCriteria)
