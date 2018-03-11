@@ -26,7 +26,7 @@ func (search *BinarySearch) Compare(match string) int {
 		matchPos++
 	}
 
-	if matchPos >= len(match)-1 {
+	if matchPos > len(match)-1 {
 		return 0
 	}
 	if data[0] == '\n' {
