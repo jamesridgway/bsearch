@@ -1,5 +1,6 @@
 # bsearch
 [![Build Status](https://travis-ci.org/jamesridgway/bsearch.svg?branch=master)](https://travis-ci.org/jamesridgway/bsearch)
+[ ![Download](https://api.bintray.com/packages/jamesridgway/debian/bsearch/images/download.svg) ](https://bintray.com/jamesridgway/debian/bsearch/_latestVersion)
 
 A utility for binary searching a sorted file for lines that start with the search key.
 
