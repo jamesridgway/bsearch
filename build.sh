@@ -39,7 +39,7 @@ Section: base
 Priority: optional
 Architecture: amd64
 Maintainer: James Ridgway <myself@james-ridgway.co.uk>
-Homepage: https://www.james-ridgway.co.uk
+Homepage: https://www.james-ridgway.co.uk/projects/bsearch
 Description: A utility for binary searching a sorted file for lines that start with the search key.
 EOF
 
