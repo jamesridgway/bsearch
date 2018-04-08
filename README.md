@@ -24,13 +24,13 @@ A utility for binary searching a sorted file for lines that start with the searc
        --help, -h         show help
        --version, -v      print the version
 
-## Installing
-You can install bsearch via the following OS specific repositories.
-
-### Download Binaries
+## Download Binaries
 Binaries are available for **Linux**, **Windows** and **macOS**.
 
 Download the latest version [here](https://www.james-ridgway.co.uk/projects/bsearch).
+
+## Installing
+You can install bsearch via the following OS specific repositories.
 
 ### Debian/Ubuntu
 
