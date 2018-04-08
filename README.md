@@ -25,7 +25,12 @@ A utility for binary searching a sorted file for lines that start with the searc
        --version, -v      print the version
 
 ## Installing
-You can install bsearch via the following OS specific repositories
+You can install bsearch via the following OS specific repositories.
+
+### Download Binaries
+Binaries are available for **Linux**, **Windows** and **macOS**.
+
+Download the latest version [here](https://www.james-ridgway.co.uk/projects/bsearch).
 
 ### Debian/Ubuntu
 
