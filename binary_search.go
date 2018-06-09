@@ -128,6 +128,8 @@ func (search *BinarySearch) PrintMatch(start int64, match string) {
 		search.file.Seek(start, os.SEEK_SET)
 	}
 	data := make([]byte, 1)
+	var full_data []byte
+
 	for count := 0; start >= 0 && search.Compare(match) == 0; count++ {
 		search.file.Seek(start, os.SEEK_SET)
 		var isEof = false
@@ -137,7 +139,7 @@ func (search *BinarySearch) PrintMatch(start int64, match string) {
 				break
 			}
 			start++
-			fmt.Printf("%s", string(data[0]))
+			full_data = append(full_data, data[0])
 			if data[0] == '\n' {
 				break
 			}
@@ -146,6 +148,7 @@ func (search *BinarySearch) PrintMatch(start int64, match string) {
 			break
 		}
 	}
+	fmt.Printf("%s", string(full_data))
 
 }
 
